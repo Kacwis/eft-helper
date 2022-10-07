@@ -30,3 +30,13 @@
 	width: 300px;
 	height: 30px;
 }
+
+.invalid label {
+	color: red;
+}
+
+.invalid input {
+	border-color: red;
+	background-color: rgba(255, 0, 0, 0.2);
+	
+}

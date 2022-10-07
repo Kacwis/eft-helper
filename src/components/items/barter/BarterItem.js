@@ -4,7 +4,7 @@ const BarterItem = (props) => {
     return (
         <li className={style.container}>
             <div className={style['main-info']}>
-                <img />
+                <img alt='barter_item_icon'/>
                 <label>{props.item.name}</label>
             </div>
             <div>

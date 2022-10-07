@@ -1,11 +1,33 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useHttp from "../../hooks/use-http";
+import useValidation from "../../hooks/use-validation";
 import LoadingSpinner from "../ui/LoadingSpinner";
 
 import style from "./SignUpForm.module.css";
 
+const EMAIL_REGEX =   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
+const PASSWORD_REGEX = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[]:;<>,.?~_+-=|\]).{8,32}$/i
+
 const SIGN_UP_API_URL = "http://localhost:8080/api/auth/signup";
+
+const emailValidationCondition = (emailInputValue) => {
+	return (emailInputValue.match(EMAIL_REGEX));
+}
+
+const usernameValidationCondition = (usernameInputValue) => {
+	return usernameInputValue.length === 0 ? false : true;
+}
+
+const passwordValidationCondition = (passowordInputValue) => {
+	let isLengthValid = passowordInputValue.length > 7 && passowordInputValue < 32;
+	let hasUppercaseLetter = passowordInputValue.match(/.*[A-Z].*/i);
+	let hasSpecialCharacter = passowordInputValue.match(/.*[*.!@$%^&(){}[\]:;<>,.?/~_+-=|].*/i)
+	console.log(isLengthValid, hasUppercaseLetter, hasSpecialCharacter);
+	return isLengthValid && hasUppercaseLetter && hasSpecialCharacter;
+}
+
 
 const sendSignUpRequest = async (requestData) => {
 	const response = await fetch(SIGN_UP_API_URL, {
@@ -31,6 +53,36 @@ const SignUpForm = (props) => {
 	const usernameInputRef = useRef();
 	const passwordInputRef = useRef();
 
+	const {
+		inputValue: emailInputValue,
+		isInputTouched: isEmailInputTouched,
+		isInputValid: isEmailInputValid,
+		inputBlurHandler: emailInputBlurHandler,
+		inputChangeHandler: emailInputChangeHandler,
+		cleanInput: cleanEmailInput
+	} =
+	useValidation(emailValidationCondition)
+
+	const {
+		inputValue: usernameInputValue,
+		isInputTouched: isUsernameInputTouched,
+		isInputValid: isUsernameInputValid,
+		inputBlurHandler: usernameInputBlurHandler,
+		inputChangeHandler: usernameInputChangeHandler,
+		cleanInput: cleanUsernameInput
+	} =
+	useValidation(usernameValidationCondition)
+
+	const {
+		inputValue: passwordInputValue,
+		isInputTouched: isPasswordInputTouched,
+		isInputValid: isPasswordInputValid,
+		inputBlurHandler: passwordInputBlurHandler,
+		inputChangeHandler: passwordInputChangeHandler,
+		cleanInput: cleanPasswordInput
+	} =
+	useValidation(passwordValidationCondition)
+
 	const navigate = useNavigate();
 
 	const {
@@ -54,7 +106,7 @@ const SignUpForm = (props) => {
 		if (status === "completed" && !error) {
 			navigate("/log-in");
 		}
-	}, [status]);
+	}, [status, error, navigate]);
 
 	if (error) {
 		return (
@@ -68,21 +120,47 @@ const SignUpForm = (props) => {
 		return <LoadingSpinner />;
 	}
 
+	const getInputClassNames = (isInputValid, isInputTouched) => {
+		return `${style.input} ${!isInputValid && isInputTouched ? style.invalid : ''}`
+	}
+
+
 	return (
 		<div className={style.container}>
 			<h1>Sign Up</h1>
 			<form className={style.form} onSubmit={submitHandler}>
-				<div className={style.input}>
+				<div className={getInputClassNames(isEmailInputValid, isEmailInputTouched)}>
 					<label>Email</label>
-					<input type="email" id="email" ref={emailInputRef} />
+					<input 
+						type="email" 
+						id="email" 
+						ref={emailInputRef} 
+						value={emailInputValue} 
+						onChange={emailInputChangeHandler} 
+						onBlur={emailInputBlurHandler}
+					/>
 				</div>
-				<div className={style.input}>
+				<div className={getInputClassNames(isUsernameInputValid, isUsernameInputTouched)}>
 					<label>Username</label>
-					<input type="text" id="username" ref={usernameInputRef} />
+					<input 
+						type="text" 
+						id="username" 
+						ref={usernameInputRef} 
+						value={usernameInputValue} 
+						onChange={usernameInputChangeHandler} 
+						onBlur={usernameInputBlurHandler}
+					/>
 				</div>
-				<div className={style.input}>
+				<div className={getInputClassNames(isPasswordInputValid, isPasswordInputTouched)}>
 					<label>Password</label>
-					<input type="password" id="password" ref={passwordInputRef} />
+					<input 
+						type="password" 
+						id="password" 
+						ref={passwordInputRef} 
+						value={passwordInputValue} 
+						onChange={passwordInputChangeHandler} 
+						onBlur={passwordInputBlurHandler} 
+					/>
 				</div>
 				<div>
 					<button type="submit">Sign up</button>

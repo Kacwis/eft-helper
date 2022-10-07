@@ -1,0 +1,8 @@
+.ammo-list {
+	background-color: white;
+}
+
+.ammo-list ul {
+	list-style: none;
+	padding-left: 0;
+}

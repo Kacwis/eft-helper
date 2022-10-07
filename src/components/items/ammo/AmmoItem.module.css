@@ -1,0 +1,12 @@
+.ammo-info {
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.ammo-info {
+	text-align: left;
+}
+
+.name {
+	font-weight: bold;
+}

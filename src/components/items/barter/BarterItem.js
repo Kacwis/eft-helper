@@ -1,7 +1,9 @@
+import style from './BarterItem.module.css'
+
 const BarterItem = (props) => {
     return (
-        <ul>
-            <div>
+        <li className={style.container}>
+            <div className={style['main-info']}>
                 <img />
                 <label>{props.item.name}</label>
             </div>
@@ -9,7 +11,7 @@ const BarterItem = (props) => {
                 <label>{props.item.weight}</label>
                 <label>{props.item.shortName}</label>
             </div>
-        </ul>
+        </li>
     )
 }
 

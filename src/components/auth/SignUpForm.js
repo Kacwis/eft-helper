@@ -20,14 +20,12 @@ const usernameValidationCondition = (usernameInputValue) => {
 	return usernameInputValue.length === 0 ? false : true;
 }
 
-const passwordValidationCondition = (passowordInputValue) => {
-	let isLengthValid = passowordInputValue.length > 7 && passowordInputValue < 32;
-	let hasUppercaseLetter = passowordInputValue.match(/.*[A-Z].*/i);
-	let hasSpecialCharacter = passowordInputValue.match(/.*[*.!@$%^&(){}[\]:;<>,.?/~_+-=|].*/i)
-	console.log(isLengthValid, hasUppercaseLetter, hasSpecialCharacter);
+const passwordValidationCondition = (passwordInputValue) => {
+	let isLengthValid = passwordInputValue.length > 7 && passwordInputValue.length < 32;
+	let hasUppercaseLetter = passwordInputValue.match(/.*[A-Z].*/i) ? true : false;
+	let hasSpecialCharacter = passwordInputValue.match(/.*[*.!@$%^&(){}[\]:;<>,.?/~_+-=|].*/i) ? true : false;
 	return isLengthValid && hasUppercaseLetter && hasSpecialCharacter;
 }
-
 
 const sendSignUpRequest = async (requestData) => {
 	const response = await fetch(SIGN_UP_API_URL, {
@@ -139,6 +137,7 @@ const SignUpForm = (props) => {
 						onChange={emailInputChangeHandler} 
 						onBlur={emailInputBlurHandler}
 					/>
+					{(!isEmailInputValid && isEmailInputTouched) && <p>E-mail is not valid!</p> }
 				</div>
 				<div className={getInputClassNames(isUsernameInputValid, isUsernameInputTouched)}>
 					<label>Username</label>
@@ -150,6 +149,7 @@ const SignUpForm = (props) => {
 						onChange={usernameInputChangeHandler} 
 						onBlur={usernameInputBlurHandler}
 					/>
+					{(!isUsernameInputValid && isUsernameInputTouched) && <p>Username can not be blank!</p>}
 				</div>
 				<div className={getInputClassNames(isPasswordInputValid, isPasswordInputTouched)}>
 					<label>Password</label>
@@ -161,9 +161,11 @@ const SignUpForm = (props) => {
 						onChange={passwordInputChangeHandler} 
 						onBlur={passwordInputBlurHandler} 
 					/>
+					{(!isPasswordInputValid && isPasswordInputTouched) && <div className={style['password-invalid']}><p>Password must contains atleast:</p><p className={style.row}>- one uppercase character</p><p className={style.row}>- one special character</p><p className={style.row}>- eight characters</p></div>  }
 				</div>
-				<div>
-					<button type="submit">Sign up</button>
+				<div className={style.buttons}>
+					<button type="submit" className={style.submit} disabled={!isEmailInputValid || !isPasswordInputValid || !isUsernameInputValid} >Sign up</button>
+					<button className={style.cancel}>Cancel</button>
 				</div>
 			</form>
 		</div>

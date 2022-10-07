@@ -36,7 +36,7 @@ const LogInForm = () => {
 	const navigate = useNavigate();
 
 	const [response, setResponse] = useState("");
-
+	const [username, setUsername] = useState('');
 	const authCtx = useContext(AuthContext);
 
 	const {
@@ -54,14 +54,15 @@ const LogInForm = () => {
 				password: passwordInputRef.current.value,
 			})
 		);
+		setUsername(usernameInputRef.current.value);
 	};
 
 	useEffect(() => {
 		if (status === "completed" && !error) {
-			authCtx.login(response.token);
+			authCtx.login(response.token, username);
 			navigate("/home");
 		}
-	}, [status, error, response]);
+	}, [status, error, response, username]);
 
 	if (error) {
 		return (

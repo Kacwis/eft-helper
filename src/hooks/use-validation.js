@@ -4,7 +4,6 @@ const useValidation = (validationCondition) => {
     const [isInputTouched, setIsInputTouched] = useState(false);
     const [inputValue, setInputValue] = useState('');
 
-
     const inputBlurHandler = () => {
         setIsInputTouched(true);
     }

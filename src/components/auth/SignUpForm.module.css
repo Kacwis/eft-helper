@@ -22,8 +22,10 @@
 .input label {
 	padding-top: 10px;
 	padding-bottom: 4px;
+	margin-bottom:10px;
 	color: whitesmoke;
-	font-size: 30px;
+	font-size: 36px;
+	font-weight: bold;
 }
 
 .input input {
@@ -37,6 +39,75 @@
 
 .invalid input {
 	border-color: red;
-	background-color: rgba(255, 0, 0, 0.2);
-	
+	background-color: rgba(255, 0, 0, 0.2);	
 }
+
+.invalid p {
+	color: red;
+	font-weight: bold;
+}
+
+.password-invalid{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.password-invalid p{
+	margin-bottom: 2px;
+}
+
+.password-invalid .row{
+	padding-left: 5px;
+	margin: 0;
+}
+
+.buttons{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.buttons button{
+	padding: 5px 50px;
+	border-radius: 10px;
+	color: white;
+	font-size: 26px;
+	transition: all 0.3s;
+	background-color: transparent;
+}
+
+.submit{
+	border: 1px solid greenyellow;
+	margin-top: 30px;
+}
+
+.submit:hover{
+	background-color: greenyellow;
+	padding: 10px 70px;
+	font-size: 30px;
+}
+
+
+.cancel{
+	margin-top: 20px;
+	border: 1px solid red;
+}
+
+.cancel:hover{
+	background-color: red;
+	padding: 10px 70px;
+	font-size:30px;
+}
+
+.submit:disabled{
+	background-color: rgb(144, 141, 141);
+	border: 1px solid grey;
+	color: grey;
+	pointer-events: none;
+}
+
+.submit:disabled:hover{
+	background-color: rgb(144, 141, 141);
+	border: 1px solid grey;
+	color: grey;}

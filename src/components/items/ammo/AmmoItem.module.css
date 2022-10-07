@@ -1,12 +1,25 @@
 .ammo-info {
 	display: flex;
-	justify-content: space-evenly;
-}
-
-.ammo-info {
+	justify-content: space-between;
+	background-color: #333;
 	text-align: left;
 }
 
-.name {
+.ammo-info p {
+	color: white;
+	font-size: 26px;
 	font-weight: bold;
+	margin-left:30px;
+	text-align: center;
+}
+
+.ammo-info img{
+	height: 76px;
+	width: 76px;
+}
+
+.name {
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }

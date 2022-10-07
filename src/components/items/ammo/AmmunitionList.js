@@ -21,9 +21,9 @@ const readAllAmmo = async () => {
 };
 
 const DUMMY_AMMO_LIST = [
-	{id: "a1", name: '9x19 PBM ghz'},
-	{id: "a2", name: '9x19 PPM ghz'},
-	{id: "a3", name: '9x19 PST ghz'}	
+	{id: "a1", name: 'PBM ghz', caliber: '9x19'},
+	{id: "a2", name: 'PPM ghz', caliber: '9x19'},
+	{id: "a3", name: 'PST ghz', caliber: '9x19'}	
 ]
 
 const AmmunitionList = () => {

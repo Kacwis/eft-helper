@@ -20,6 +20,12 @@ const readAllAmmo = async () => {
 	return ammoList;
 };
 
+const DUMMY_AMMO_LIST = [
+	{id: "a1", name: '9x19 PBM ghz'},
+	{id: "a2", name: '9x19 PPM ghz'},
+	{id: "a3", name: '9x19 PST ghz'}	
+]
+
 const AmmunitionList = () => {
 	// const [ammoList, setAmmoList] = useState([]);
 
@@ -39,6 +45,8 @@ const AmmunitionList = () => {
 	// useEffect(() => {
 	// 	sendRequest();
 	// }, []);
+
+	const ammoList = DUMMY_AMMO_LIST;
 
 	let ammoListContent = (
 		<ul>

@@ -31,6 +31,13 @@ const MainNavigation = () => {
 							</li>
 						</React.Fragment>
 					)}
+					{authCtx.isLoggedIn && (
+						<React.Fragment>
+							<li>
+								<NavLink to='/account-panel'>Account</NavLink>
+							</li>
+						</React.Fragment>
+					)}
 				</ul>
 			</nav>
 		</header>

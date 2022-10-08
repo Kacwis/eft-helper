@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import ItemsPage from "./pages/ItemsPage";
 import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
+import AccountPanel from "./pages/AccountPanel";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 				<Route path="/items" element={<ItemsPage />} />
 				<Route path="/sign-in" element={<SignUpPage />} />
 				<Route path="/log-in" element={<LogInPage />} />
+				<Route path="/account-panel" element={<AccountPanel />} />
 			</Routes>
 		</Layout>
 	);

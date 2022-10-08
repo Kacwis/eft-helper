@@ -1,15 +1,16 @@
 import { useContext } from "react";
+import AccountInfo from "../components/account/AccountInfo";
+import { AuthContext } from "../store/auth-context";
 
-import style from './AccountPanel.module.css';
 
 const AccountPanel = () => {
     const authCtx = useContext(AuthContext);
 
     return (<div>
-        <h1>{`${authCtx.username}`}</h1>
-        <div className={style.main}>
+        <h1>{`jack's panel`} </h1>
+        <div className='account-panel-main'>
             <h2>Account info</h2>
-            <div style={style['account-info']}></div>
+            <AccountInfo email='wp.pl@wp.pl' username='jack'/>
         </div>
     </div>)
 }

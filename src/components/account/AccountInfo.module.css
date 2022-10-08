@@ -1,0 +1,66 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.info-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-row p{
+    color: white;
+    font-size: 26px;
+    text-align: center;
+    margin: 0;
+}
+
+.info-row .value{
+    margin-left: 12px;    
+}
+
+.info-row .label{
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.buttons button{
+    font-size: 26px;
+    background-color: transparent;
+    color: white;
+    padding: 5px 50px;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.password-change{
+    margin-bottom: 20px;
+    border: 1px solid yellow;
+}
+
+.password-change:hover{
+    background-color: yellow;
+    color: black;
+    padding: 10px 70px;
+    font-size: 28px;
+}
+
+.remove-account{
+    margin-bottom: 40px;
+    border: 1px solid red;
+}
+
+.remove-account:hover{
+    background-color: red;
+    padding: 10px 70px;
+    font-size: 28px;
+}

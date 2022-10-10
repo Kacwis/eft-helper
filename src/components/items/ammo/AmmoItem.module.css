@@ -2,18 +2,20 @@
 	display: flex;
 	justify-content: space-between;
 	background-color: #333;
+	margin-right: 10px;
 	text-align: left;
+	width: 100%;
 }
 
 .ammo-info p {
 	color: white;
-	font-size: 26px;
+	font-size: 22px;
 	font-weight: bold;
-	margin-left:30px;
 	text-align: center;
+	margin: auto;
 }
 
-.ammo-info img{
+.ammo-info img {
 	height: 76px;
 	width: 76px;
 }

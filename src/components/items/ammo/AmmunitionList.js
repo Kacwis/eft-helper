@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import useHttp from "../../../hooks/use-http";
+import ItemListContainer from "../../ui/ItemListContainer";
 import LoadingSpinner from "../../ui/LoadingSpinner";
 import AmmoItem from "./AmmoItem";
 import style from "./AmmunitionList.module.css";
@@ -21,53 +22,59 @@ const readAllAmmo = async () => {
 };
 
 const DUMMY_AMMO_LIST = [
-	{id: "a1", name: 'PBM ghz', caliber: '9x19'},
-	{id: "a2", name: 'PPM ghz', caliber: '9x19'},
-	{id: "a3", name: 'PST ghz', caliber: '9x19'}	
-]
+	{ id: "a1", name: "PBM ghz", caliber: "9x19" },
+	{ id: "a2", name: "PPM ghz", caliber: "9x19" },
+	{ id: "a3", name: "PST ghz", caliber: "9x19" },
+	{ id: "a4", name: "PST ghz", caliber: "9x19" },
+	{ id: "a5", name: "PST ghz", caliber: "9x19" },
+	{ id: "a6", name: "PST ghz", caliber: "9x19" },
+];
 
 const AmmunitionList = () => {
-	// const [ammoList, setAmmoList] = useState([]);
+	const [ammoList, setAmmoList] = useState([]);
 
-	// const {
-	// 	error,
-	// 	status,
-	// 	data: responseData,
-	// 	sendRequest,
-	// } = useHttp(readAllAmmo, true);
+	const {
+		error,
+		status,
+		data: responseData,
+		sendRequest,
+	} = useHttp(readAllAmmo, true);
 
-	// useEffect(() => {
-	// 	if (status === "completed" && !error) {
-	// 		setAmmoList(responseData);
-	// 	}
-	// }, [status, setAmmoList, error]);
+	useEffect(() => {
+		if (status === "completed" && !error) {
+			setAmmoList(responseData);
+		}
+	}, [status, setAmmoList, error]);
 
-	// useEffect(() => {
-	// 	sendRequest();
-	// }, []);
-
-	const ammoList = DUMMY_AMMO_LIST;
+	useEffect(() => {
+		sendRequest();
+	}, []);
 
 	let ammoListContent = (
-		<ul>
+		<ItemListContainer title="All ammunition">
 			{ammoList.map((ammo) => {
 				console.log(ammo);
 				return <AmmoItem ammo={ammo} />;
 			})}
-		</ul>
+		</ItemListContainer>
 	);
 
-	// if (status === "pending") {
-	// 	ammoListContent = <LoadingSpinner />;
-	// }
+	if (status === "pending") {
+		ammoListContent = <LoadingSpinner />;
+	}
 
-	// if (status === "completed" && error) {
-	// 	ammoListContent = (
-	// 		<img src="http://localhost:8080/api/icons/5a0c27731526d80618476ac4" />
-	// 	);
-	// }
+	if (status === "completed" && error) {
+		ammoListContent = (
+			<img src="http://localhost:8080/api/icons/5a0c27731526d80618476ac4" />
+		);
+	}
 
-	return <div className={style["ammo-list"]}>{ammoListContent}</div>;
+	return (
+		<div className={style["ammo-list"]}>
+			<h2>Ammunition list</h2>
+			{ammoListContent}
+		</div>
+	);
 };
 
 export default AmmunitionList;

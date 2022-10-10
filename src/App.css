@@ -1,3 +1,18 @@
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: black;
+	border-radius: 30px;
+	border: 6px solid transparent;
+	background-clip: content-box;
+}
+
 body {
 	background-color: rgb(32, 32, 32);
 }
@@ -30,14 +45,54 @@ body {
 	color: white;
 }
 
-.account-panel-main{
+.account-panel-main {
 	display: flex;
 	flex-direction: column;
+	width: 60%;
 	align-items: center;
 	background-color: #333;
 }
 
-.account-panel-main h2{
-	color: white;
+.account-panel-main h2 {
+	color: seagreen;
 	font-size: 32px;
+	text-shadow: 1px 1px 10px rgb(26, 80, 50);
+}
+
+.card {
+	width: 90%;
+	border: 1px solid seagreen;
+	box-shadow: 1px 1px 3px rgb(26, 80, 50);
+	margin: 4px 15px;
+}
+
+.item-list-cont {
+	background-color: transparent;
+	display: flex;
+	flex-direction: column;
+	max-height: 400px;
+	overflow: scroll;
+}
+
+.item-page-container {
+	width: 100em;
+	display: flex;
+}
+
+.item-page-container h2 {
+	display: inline;
+	justify-self: center;
+	text-align: center;
+}
+
+.account-panel-cont {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.account-panel-cont h1 {
+	color: white;
+	font-weight: bold;
+	font-size: 40px;
 }

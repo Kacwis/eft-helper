@@ -16,7 +16,7 @@ const sendLogInRequest = async (requestData) => {
 		},
 		body: JSON.stringify({
 			username: requestData.username,
-			password: requestData.password,
+			password: requestData.passsword,
 		}),
 	});
 	const data = response.json();
@@ -36,7 +36,7 @@ const LogInForm = () => {
 	const navigate = useNavigate();
 
 	const [response, setResponse] = useState("");
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState("");
 	const authCtx = useContext(AuthContext);
 
 	const {

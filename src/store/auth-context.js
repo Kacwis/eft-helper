@@ -3,7 +3,7 @@ import React, { useState } from "react";
 export const AuthContext = React.createContext({
 	token: "",
 	isLoggedIn: false,
-	username: '',
+	username: "",
 	login: (token, username) => {},
 	logout: () => {},
 });
@@ -11,7 +11,7 @@ export const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
 	const [token, setToken] = useState(null);
 	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-	const [username, setUsername] = useState('');
+	const [username, setUsername] = useState("");
 
 	const loginHandler = (token, username) => {
 		setToken(token);
@@ -23,7 +23,7 @@ export const AuthContextProvider = (props) => {
 	const logoutHandler = () => {
 		setToken(null);
 		setIsUserLoggedIn(false);
-		setUsername('');
+		setUsername("");
 		console.log("loggedOut");
 	};
 

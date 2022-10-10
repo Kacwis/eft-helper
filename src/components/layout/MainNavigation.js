@@ -31,10 +31,10 @@ const MainNavigation = () => {
 							</li>
 						</React.Fragment>
 					)}
-					{authCtx.isLoggedIn && (
+					{!authCtx.isLoggedIn && (
 						<React.Fragment>
 							<li>
-								<NavLink to='/account-panel'>Account</NavLink>
+								<NavLink to="/account-panel">Account</NavLink>
 							</li>
 						</React.Fragment>
 					)}

@@ -1,0 +1,20 @@
+.info-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px 10px;
+}
+
+.info-row p {
+	color: rgb(186, 236, 208);
+	font-size: 26px;
+	margin: 0;
+}
+
+.info-row .value {
+	margin-left: 12px;
+}
+
+.info-row .label {
+	font-weight: bold;
+	font-size: 26px;
+}

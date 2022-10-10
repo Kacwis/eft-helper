@@ -1,17 +1,19 @@
 import style from "./AmmoItem.module.css";
-import placeholder from '../../../assets/eft_logo_edited.png';
+import placeholder from "../../../assets/eft_logo_edited.png";
+import Card from "../../ui/Card";
 
 const AmmoItem = (props) => {
-
 	return (
 		<li key={props.ammo.id}>
-			<div className={style["ammo-info"]}>
-				<img src={placeholder} alt='item placeholder' />
-				<div className={style.name}>
-					<p>{props.ammo.caliber}</p>
+			<Card>
+				<div className={style["ammo-info"]}>
+					<img
+						src={`http://localhost:8080/api/icons/${props.ammo.id}`}
+						alt="item placeholder"
+					/>
 					<p>{props.ammo.name}</p>
 				</div>
-			</div>
+			</Card>
 		</li>
 	);
 };

@@ -1,6 +1,8 @@
+import MyHideoutMain from "../components/my-hideout/MyHideoutMain";
+
 const MyHideoutPage = () => {
-    return <div>
-        
+    return <div className="centered">
+        <MyHideoutMain />
     </div>
 }
 

@@ -1,9 +1,8 @@
-.main{
-    background-color: grey;
-    width: 50%;
+.main {
+	width: 50%;
 }
 
-.main h2{
-    font-size: 36px;
-    font-weight: bold;
+.main h2 {
+	font-size: 36px;
+	font-weight: bold;
 }

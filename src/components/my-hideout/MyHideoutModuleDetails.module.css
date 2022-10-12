@@ -1,0 +1,32 @@
+.main {
+	margin-top: 20%;
+	background-color: #eef0f2;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.required-items-row {
+	display: flex;
+	width: 180px;
+	justify-content: space-between;
+	background-color: #011638;
+	border: 2px solid #eef0f2;
+	cursor: pointer;
+}
+
+.required-items-row p {
+	margin-left: 10px;
+	margin-right: 20px;
+	color: #eef0f2;
+	text-align: left;
+}
+
+.required-items-row img {
+	width: 50px;
+	height: 50px;
+}
+
+.required-items {
+	padding-right: 10%;
+}

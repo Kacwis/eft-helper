@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+	xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Home</title>
+		<link rel="stylesheet" href="../static/css/styles.css" />
+	</head>
+	<body>
+		<div class="login_fieldset_div">
+			<form method="post" th:action="@{/api/auth/signup}" th:object="${signUpRequest}">
+				<fieldset class="login_fieldset">
+					<legend>Sign in</legend>
+					<label class="login_fieldset_label">Username</label>
+					<input type="text" class="login_input" th:field="${signUpRequest.username}"/>
+                    <label class="login_fieldset_label">E-mail</label>
+					<input type="text" class="login_input" th:field="${signUpRequest.email}"/>
+					<label class="login_fieldset_label">Password</label>
+					<input type="password" class="login_input" th:field="${signUpRequest.password}" />
+                    <button type="submit" class="submit_button">Sign in</button>
+				</fieldset>
+			</form>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+POJO hideoutStation and hideoutModule{
+    - ids of module_requirements
+}
+
+HideoutService {
+    - saving Stations and saving modules and requirements
+}
+
+Repository {
+    - moduleRequirement
+}

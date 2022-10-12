@@ -1,0 +1,19 @@
+spring:
+  main:
+    banner-mode: off
+    allow-bean-definition-overriding: true
+  jpa:
+    hibernate:
+      ddl-auto: update
+  h2:
+    console:
+      enabled: true
+      path: '/console'
+  datasource:
+    url: 'jdbc:h2:file:./eft-helper-database'
+  flyway:
+    baseline-on-migrate: true
+app:
+  jwtSecret: 'secret'
+  jwtExpirationMs: 86400000
+

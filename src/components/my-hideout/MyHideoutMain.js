@@ -1,15 +1,23 @@
-import HideoutModules from "./HideoutModules";
+import { Route } from "react-router-dom";
+import HideoutStations from "./HideoutStations";
+import StationDetails from "./stations/StationDetails";
+import QuestDetails from "./quests/QuestDetails";
 import style from "./MyHideoutMain.module.css";
 
 const MyHideoutMain = () => {
     return <div className={style.main}>
-        <HideoutModules />
+        <div>
+            <HideoutStations />
+            {/* <Quests /> */}
+        </div>
     </div>
 }
 
 export default MyHideoutMain;
 
 /* 
-    Hideout (items, what completed) || Quests(items, which completed)
-    Statistics
+    HideoutStations >       Quests>
+        HideoutStation          Quest
+
+    Stations / Quests Details 
 */

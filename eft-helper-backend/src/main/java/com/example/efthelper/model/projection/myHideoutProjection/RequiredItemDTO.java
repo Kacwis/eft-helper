@@ -1,4 +1,4 @@
-package com.example.efthelper.model.projection;
+package com.example.efthelper.model.projection.myHideoutProjection;
 
 public class RequiredItemDTO {
 
@@ -6,13 +6,24 @@ public class RequiredItemDTO {
 
     private String id;
 
+    private Integer quantity;
 
-    public RequiredItemDTO(String name, String id) {
-        this.name = name;
+
+    public RequiredItemDTO(String id, String name, Integer quantity) {
         this.id = id;
+        this.name = name;
+        this.quantity = quantity;
     }
 
     public RequiredItemDTO() {
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public String getName() {

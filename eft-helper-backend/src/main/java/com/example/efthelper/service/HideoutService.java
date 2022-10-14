@@ -4,17 +4,13 @@ import com.example.efthelper.model.HideoutModule;
 import com.example.efthelper.model.HideoutStation;
 import com.example.efthelper.model.ModuleRequirement;
 import com.example.efthelper.model.projection.*;
+import com.example.efthelper.model.projection.myHideoutProjection.HideoutStationDetailsDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.RequiredItemDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.StationLevelDTO;
 import com.example.efthelper.model.repository.*;
-import com.example.efthelper.model.repository.jpa.JpaModuleRequirementRepository;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.SessionFactoryBuilder;
-import org.hibernate.boot.internal.SessionFactoryBuilderImpl;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Persistence;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class HideoutService {
@@ -29,16 +25,21 @@ public class HideoutService {
 
     final private ItemRepository itemRepository;
 
+    final private UserRepository userRepository;
+
+
     public HideoutService(final HideoutModuleRepository moduleRepository,
                           final HideoutStationRepository stationRepository,
                           final ModuleRequirementRepository requirementRepository,
                           final TraderRepository traderRepository,
-                          final ItemRepository itemRepository) {
+                          final ItemRepository itemRepository,
+                          UserRepository userRepository) {
         this.moduleRepository = moduleRepository;
         this.stationRepository = stationRepository;
         this.requirementRepository = requirementRepository;
         this.traderRepository = traderRepository;
         this.itemRepository = itemRepository;
+        this.userRepository = userRepository;
     }
 
     public List<HideoutStation> readAllStations(){
@@ -49,28 +50,74 @@ public class HideoutService {
         return stationRepository.findById(stationId);
     }
 
-    public HideoutStationDetailsDTO readStationDetailsById(Integer id) {
-        var result = stationRepository.findById(id);
-        if(result.isEmpty()) {
-            return null;
+    public Set<HideoutStation> readAllStationsForUser(String username) throws Exception {
+        var userResult = userRepository.findByUsername(username);
+        if(userResult.isEmpty()){
+            throw new Exception("User Not found");
         }
-        var station = result.get();
-        var requiredItems =
-                station.getModules().stream()
-                .filter(module -> module.getName().length() == 24)
-                .collect(Collectors.toList());
-        var requiredItemsDtoSet = new HashSet<RequiredItemDTO>();
-        for(var rItem : requiredItems){
-            var currentItemOpt = itemRepository.findById(rItem.getName());
-            if(currentItemOpt.isPresent()){
-                System.out.println(currentItemOpt.get());
-                var currentItem = currentItemOpt.get();
-                requiredItemsDtoSet.add(new RequiredItemDTO(currentItem.getName(), currentItem.getId()));
-            }
+        return userResult.get().getHideoutStations();
+    }
+
+
+    public HideoutStationDetailsDTO readStationDetailsByIdForUser(Integer id, String username) throws Exception {
+        var userResult = userRepository.findByUsername(username);
+        if(userResult.isEmpty()){
+            throw new Exception("User not found");
         }
+        var stationResult = userResult.get()
+                .getHideoutStations().stream()
+                .filter(s -> s.getId().equals(id)).findFirst();
+        if(stationResult.isEmpty()){
+            throw new Exception("Station not found");
+        }
+        var station = stationResult.get();
         var stationDetailsDTO = new HideoutStationDetailsDTO(station.getId(), station.getName(), station.getFunction());
-        requiredItemsDtoSet.forEach(rIDto -> stationDetailsDTO.getRequiredItems().add(rIDto));
+        stationDetailsDTO.setStationLevels(getStationLevelsForStation(station.getModules()));
         return stationDetailsDTO;
+    }
+
+    private Set<StationLevelDTO> getStationLevelsForStation(Set<HideoutModule> modules){
+        var stationLevelsDTOs = new HashSet<StationLevelDTO>();
+        modules.forEach(module -> {
+            var currentModule = new StationLevelDTO(module.getId(), module.getLevel());
+            currentModule.setRequiredItems(getRequiredItemsForStationLevel(module.getRequirements()));
+            currentModule.setRequiredStations(getRequiredStationsForStationLevel(module.getRequirements()));
+            stationLevelsDTOs.add(currentModule);
+        });
+        return stationLevelsDTOs;
+    }
+
+    private Set<RequiredItemDTO> getRequiredStationsForStationLevel(Set <ModuleRequirement> moduleRequirements){
+        var requiredStations = new HashSet<RequiredItemDTO>();
+        moduleRequirements.stream()
+                .filter(mr -> mr.getType().equals("module"))
+                .forEach(smr -> {
+                    var stationResult = stationRepository.findByName(smr.getName());
+                    if(stationResult.isPresent()){
+                        var station = stationResult.get();
+                        var currentRequiredStation = new RequiredItemDTO(station.getId().toString(), station.getName(), smr.getQuantity());
+                        requiredStations.add(currentRequiredStation);
+                    }
+                });
+        return requiredStations;
+    }
+
+
+    private Set<RequiredItemDTO> getRequiredItemsForStationLevel(Set<ModuleRequirement> moduleRequirements){
+        var requiredItemsDTOs = new HashSet<RequiredItemDTO>();
+        moduleRequirements.stream()
+                .filter(mr -> mr.getType().equals("item"))
+                .forEach(imr -> {
+                    var itemResult = itemRepository.findById(imr.getName());
+                    if(itemResult.isPresent()){
+                        var currentItem = itemResult.get();
+                        requiredItemsDTOs.add(
+                                new RequiredItemDTO(currentItem.getId(), currentItem.getName(), imr.getQuantity())
+                        );
+                    }
+                });
+
+        return requiredItemsDTOs;
     }
 
     public HideoutStation saveHideoutStation(HideoutStationDTO hideoutStation){

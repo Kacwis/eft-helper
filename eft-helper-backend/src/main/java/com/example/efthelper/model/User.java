@@ -23,6 +23,18 @@ public class User {
     private String email;
 
     @ManyToMany
+    @JoinTable(name = "users_stations",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "station_id"))
+    private Set<HideoutStation> hideoutStations = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(name = "users_quests",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "quest_id"))
+    private Set<Quest> quests = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_to_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -36,6 +48,22 @@ public class User {
     }
 
     public User() {
+    }
+
+    public Set<HideoutStation> getHideoutStations() {
+        return hideoutStations;
+    }
+
+    public void setHideoutStations(Set<HideoutStation> hideoutStations) {
+        this.hideoutStations = hideoutStations;
+    }
+
+    public Set<Quest> getQuests() {
+        return quests;
+    }
+
+    public void setQuests(Set<Quest> quests) {
+        this.quests = quests;
     }
 
     public String getUsername() {

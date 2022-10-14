@@ -5,6 +5,7 @@ import com.example.efthelper.model.HideoutStation;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface HideoutStationRepository {
 
@@ -15,4 +16,6 @@ public interface HideoutStationRepository {
     HideoutStation save(HideoutStation station);
 
     boolean existsById(Integer id);
+
+    Optional<HideoutStation> findByName(String name);
 }

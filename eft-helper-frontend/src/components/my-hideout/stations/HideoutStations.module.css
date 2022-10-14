@@ -3,8 +3,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	max-height: 400px;
-	overflow: scroll;
 }
 
 .main h2 {
@@ -16,6 +14,8 @@
 .main ul {
 	list-style: none;
 	padding-left: 0;
+	max-height: 200px;
+	overflow: scroll;
 }
 
 .stations-list {
@@ -34,3 +34,4 @@
 	padding: 5px 5px;
 	margin: 5px 0;
 }
+

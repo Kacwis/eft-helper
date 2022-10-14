@@ -30,3 +30,8 @@
 .required-items {
 	padding-right: 10%;
 }
+
+.required-items-list {
+	overflow: scroll;
+	max-height: 300px;
+}

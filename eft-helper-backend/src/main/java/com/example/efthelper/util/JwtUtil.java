@@ -13,7 +13,9 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
 
@@ -56,5 +58,13 @@ public class JwtUtil {
             System.out.println("JWT claims string is empty");
         }
         return false;
+    }
+
+    public String parseJwt(HttpServletRequest request) {
+        var headerAuth = request.getHeader("Authorization");
+        if(StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")){
+            return headerAuth.substring(7);
+        }
+        return null;
     }
 }

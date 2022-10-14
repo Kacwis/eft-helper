@@ -31,10 +31,18 @@ const MainNavigation = () => {
 							</li>
 						</React.Fragment>
 					)}
-					{!authCtx.isLoggedIn && (
+					{authCtx.isLoggedIn && (
 						<React.Fragment>
 							<li>
 								<NavLink to="/account-panel">Account</NavLink>
+							</li>
+							<li>
+								<NavLink
+									to="/my-hideout"
+									className={({ isActive }) => (isActive ? "active" : "")}
+								>
+									My hideout
+								</NavLink>
 							</li>
 						</React.Fragment>
 					)}

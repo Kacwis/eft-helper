@@ -16,10 +16,10 @@ const sendLogInRequest = async (requestData) => {
 		},
 		body: JSON.stringify({
 			username: requestData.username,
-			password: requestData.passsword,
+			password: requestData.password,
 		}),
 	});
-	const data = response.json();
+	const data = await response.json();
 	if (!response.ok) {
 		throw new Error("Something went wrong!");
 	}
@@ -35,7 +35,6 @@ const LogInForm = () => {
 
 	const navigate = useNavigate();
 
-	const [response, setResponse] = useState("");
 	const [username, setUsername] = useState("");
 	const authCtx = useContext(AuthContext);
 
@@ -48,21 +47,20 @@ const LogInForm = () => {
 
 	const submitHandler = (e) => {
 		e.preventDefault();
-		setResponse(
-			sendRequest({
-				username: usernameInputRef.current.value,
-				password: passwordInputRef.current.value,
-			})
-		);
+		sendRequest({
+			username: usernameInputRef.current.value,
+			password: passwordInputRef.current.value,
+		});
 		setUsername(usernameInputRef.current.value);
 	};
 
 	useEffect(() => {
 		if (status === "completed" && !error) {
-			authCtx.login(response.token, username);
+			console.log(responseData.token, username);
+			authCtx.login(responseData.token, username);
 			navigate("/home");
 		}
-	}, [status, error, response, username]);
+	}, [status, error, responseData, username]);
 
 	if (error) {
 		return (

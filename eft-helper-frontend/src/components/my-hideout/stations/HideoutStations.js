@@ -2,8 +2,9 @@ import style from "./HideoutStations.module.css";
 
 import { getHideoutStations } from "../../api/api";
 import { Link, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useHttp from "../../../hooks/use-http";
+import { AuthContext } from "../../../store/auth-context";
 
 const DUMMY_STATIONS = [
 	{ id: "s1", name: "Generator" },
@@ -15,6 +16,8 @@ const DUMMY_STATIONS = [
 
 const HideoutStations = (props) => {
 	const [stationsList, setStationsList] = useState(DUMMY_STATIONS);
+
+	const authCtx = useContext(AuthContext);
 
 	const {
 		error,
@@ -31,7 +34,7 @@ const HideoutStations = (props) => {
 	}, [status, error, setStationsList]);
 
 	useEffect(() => {
-		sendRequest();
+		sendRequest(authCtx.token);
 	}, []);
 
 	if (status === "pending") {
@@ -50,8 +53,13 @@ const HideoutStations = (props) => {
 		);
 	});
 
+	const showTokenButtonHandler = () => {
+		console.log(authCtx.token);
+	};
+
 	return (
 		<div className={style.main}>
+			<button onClick={showTokenButtonHandler}>TOKEN</button>
 			<h2>Stations</h2>
 			<ul className={style["stations-list"]}>{stationsListContent}</ul>
 		</div>

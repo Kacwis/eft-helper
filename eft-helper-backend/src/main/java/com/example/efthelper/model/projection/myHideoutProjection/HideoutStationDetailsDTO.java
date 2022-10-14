@@ -1,4 +1,4 @@
-package com.example.efthelper.model.projection;
+package com.example.efthelper.model.projection.myHideoutProjection;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,13 +13,13 @@ public class HideoutStationDetailsDTO {
 
     private String description;
 
-    private Set<RequiredItemDTO> requiredItems;
+    private Set<StationLevelDTO> stationLevels;
 
     public HideoutStationDetailsDTO(Integer id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.requiredItems = new HashSet<>();
+        this.stationLevels = new HashSet<>();
     }
 
     public HideoutStationDetailsDTO() {
@@ -49,11 +49,11 @@ public class HideoutStationDetailsDTO {
         this.description = description;
     }
 
-    public Set<RequiredItemDTO> getRequiredItems() {
-        return requiredItems;
+    public Set<StationLevelDTO> getStationLevels() {
+        return stationLevels;
     }
 
-    public void setRequiredItems(Set<RequiredItemDTO> requiredItems) {
-        this.requiredItems = requiredItems;
+    public void setStationLevels(Set<StationLevelDTO> requiredItems) {
+        this.stationLevels = requiredItems;
     }
 }

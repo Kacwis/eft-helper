@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import MyHideoutModulesDetails from "../MyHideoutModulesDetails";
+import style from "./QuestDetails.module.css";
 
 const DUMMY_QUESTS = [
 	{
@@ -19,18 +19,16 @@ const DUMMY_QUESTS = [
 	},
 	{
 		id: "q2",
-		name: "Mechanics- part 2",
-		description: "Collecting some scraps...",
-		requiredItems: [
-			{
-				id: "i3",
-				name: "Can of spray",
-			},
-			{
-				id: "i4",
-				name: "Graphics card",
-			},
-		],
+		title: "Debut",
+		requiredLvl: 1,
+		wiki: "some wiki",
+		givinTrader: {
+			name: "Prapor",
+		},
+		turninTrader: {
+			name: "Prapor",
+		},
+		exp: 1000,
 	},
 ];
 
@@ -39,11 +37,32 @@ const QuestDetails = () => {
 
 	const allQuests = DUMMY_QUESTS;
 
-	
+	const quest = DUMMY_QUESTS[1];
 
-	const quest = allQuests.find((quest) => quest.id === params.questId);
-
-	return <MyHideoutModulesDetails module={quest} />;
+	return (
+		<div className={style["quest-details-main"]}>
+			<div className={style["quest-details-info"]}>
+				<h3>{quest.title}</h3>
+				<div className={style["general-info"]}>
+					<p>{quest.requiredLvl} lvl</p>
+					<p>{quest.exp} exp.</p>
+					<a>{quest.wiki}</a>
+					{quest.hint !== null && <p>{quest.hint}</p>}
+				</div>
+				<div className={style.traders}>
+					<a>{quest.givinTrader.name}</a>
+					<a>{quest.turninTrader.name}</a>
+				</div>
+				<div className={style.reputations}>
+					<p>Prapor</p>
+					<p>0.02</p>
+				</div>
+			</div>
+			<div>
+				<h4>Objectives</h4>
+			</div>
+		</div>
+	);
 };
 
 export default QuestDetails;

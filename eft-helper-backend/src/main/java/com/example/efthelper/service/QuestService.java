@@ -3,13 +3,18 @@ package com.example.efthelper.service;
 import com.example.efthelper.model.*;
 import com.example.efthelper.model.projection.NewQuestDTO;
 import com.example.efthelper.model.projection.NewQuestReputationDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.RequiredItemDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.TraderDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.quest.MyHideoutQuestDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.quest.QuestDetailsDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.quest.QuestDetailsObjectiveDTO;
 import com.example.efthelper.model.repository.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestService {
@@ -24,17 +29,25 @@ public class QuestService {
 
     private final ItemRepository itemRepository;
 
+    private final MapRepository mapRepository;
+
+    private final UserRepository userRepository;
+
 
     public QuestService(final QuestReputationRepository reputationRepository,
                         final QuestObjectiveRepository objectiveRepository,
                         final QuestRepository questRepository,
                         final TraderRepository traderRepository,
-                        final ItemRepository itemRepository ) {
+                        final ItemRepository itemRepository,
+                        final MapRepository mapRepository,
+                        final UserRepository userRepository) {
         this.reputationRepository = reputationRepository;
         this.objectiveRepository = objectiveRepository;
         this.questRepository = questRepository;
         this.traderRepository = traderRepository;
         this.itemRepository = itemRepository;
+        this.mapRepository = mapRepository;
+        this.userRepository = userRepository;
     }
 
     // Quest
@@ -153,6 +166,219 @@ public class QuestService {
 
         return questToSave;
     }
+
+    // My hideout quest
+
+    public Set<MyHideoutQuestDTO> getAllQuestsForUser(String username) throws Exception {
+        var user = userRepository.findByUsername(username);
+        if(user.isEmpty()){
+            throw new Exception("User not found");
+        }
+        var userQuests = user.get().getQuests();
+        var questDTOs = new HashSet<MyHideoutQuestDTO>();
+        userQuests.forEach(quest -> questDTOs.add(new MyHideoutQuestDTO(quest.getId(), quest.getTitle())));
+        return questDTOs;
+    }
+
+
+    public QuestDetailsDTO getQuestDetailsForUser(Integer questId){
+        var questResult = questRepository.findById(questId);
+        if(questResult.isEmpty()) {
+            return null;
+        }
+        var quest = questResult.get();
+        var questDetailsDTO = new QuestDetailsDTO(
+                quest.getId(),
+                quest.getTitle(),
+                quest.getLevelRequired(),
+                quest.getExp(),
+                quest.getWiki()
+        );
+        // All objectives
+        questDetailsDTO.setBuildObjectives(getItemObjectives(quest.getObjectives(), "build"));
+        questDetailsDTO.setCollectObjectives(getItemAndQuantityObjectives(quest.getObjectives(), "collect"));
+        questDetailsDTO.setFindObjectives(getItemAndQuantityObjectives(quest.getObjectives(), "find"));
+        questDetailsDTO.setKeyObjectives(getItemObjectives(quest.getObjectives(), "key"));
+        questDetailsDTO.setKillObjectives(getTargetAndQuantityObjectives(quest.getObjectives(), "kill"));
+        questDetailsDTO.setLocateObjectives(getTargetObjectives(quest.getObjectives(), "locate"));
+        questDetailsDTO.setPickupObjectives(getTargetObjectives(quest.getObjectives(), "pickup"));
+        questDetailsDTO.setMarkObjectives(getTargetObjectives(quest.getObjectives(), "mark"));
+        questDetailsDTO.setWarningObjectives(getTargetObjectives(quest.getObjectives(), "warning"));
+        questDetailsDTO.setReputationObjectives(getTraderObjectives(quest.getObjectives()));
+        questDetailsDTO.setSkillObjectives(getTargetAndQuantityObjectives(quest.getObjectives(), "skill"));
+        questDetailsDTO.setPlaceObjectives(getPlaceObjectives(quest.getObjectives()));
+        // traders
+        var givingTrader = quest.getGivingTrader();
+        var turningTrader = quest.getTurningTrader();
+        questDetailsDTO.setGivingTrader(new TraderDTO(givingTrader.getId(), givingTrader.getName()));
+        questDetailsDTO.setTurningTrader(new TraderDTO(turningTrader.getId(), turningTrader.getName()));
+        return questDetailsDTO;
+    }
+
+    private Set<QuestDetailsObjectiveDTO> getPlaceObjectives(Set<QuestObjective> objectives) {
+        var currentObjectives = getObjectivesByType(objectives, "place");
+        if(currentObjectives.size() == 0){
+            return null;
+        }
+        var placeObjectivesDTOs = new HashSet<QuestDetailsObjectiveDTO>();
+        currentObjectives.forEach(questObjective -> {
+            var mapResult = mapRepository.findById(questObjective.getLocation());
+            var mapName = "All";
+            if(mapResult.isPresent()){
+                mapName = mapResult.get().getName();
+            }
+            if(itemRepository.existsById(questObjective.getTarget())){
+                var item = itemRepository.findById(questObjective.getTarget()).get();
+                placeObjectivesDTOs.add(new QuestDetailsObjectiveDTO(
+                        questObjective.getId(),
+                        mapName,
+                        new RequiredItemDTO(item.getId(), item.getName(), 1),
+                        questObjective.getNumber()
+                ));
+            }
+            else{
+                placeObjectivesDTOs.add(new QuestDetailsObjectiveDTO(
+                        questObjective.getId(),
+                        mapName,
+                        questObjective.getTarget(),
+                        questObjective.getNumber()
+                ));
+            }
+        });
+        return placeObjectivesDTOs;
+    }
+
+    private Set<QuestDetailsObjectiveDTO> getTraderObjectives(Set<QuestObjective> objectives) {
+        var currentObjectives = getObjectivesByType(objectives, "reputation");
+        if(currentObjectives.size() == 0){
+            return null;
+        }
+        var traderObjectivesDTOList = new HashSet<QuestDetailsObjectiveDTO>();
+        currentObjectives.forEach(questObjective -> {
+            var traderResult = traderRepository.findById(Integer.parseInt(questObjective.getTarget()));
+            if(traderResult.isEmpty()){
+                return;
+            }
+            var mapName = "All";
+            var trader = traderResult.get();
+            traderObjectivesDTOList.add(new QuestDetailsObjectiveDTO(
+                    questObjective.getId(),
+                    mapName,
+                    questObjective.getNumber(),
+                    new TraderDTO(trader.getId(), trader.getName())
+            ));
+        });
+        return traderObjectivesDTOList;
+    }
+
+    private Set<QuestDetailsObjectiveDTO> getTargetObjectives(Set<QuestObjective> objectives, String type) {
+        var currentObjectives = getObjectivesByType(objectives, type);
+        if(currentObjectives.size() == 0){
+            return null;
+        }
+        var objectivesDTOList = new HashSet<QuestDetailsObjectiveDTO>();
+        currentObjectives.forEach(questObjective -> {
+            var mapResult = mapRepository.findById(questObjective.getLocation());
+            String mapName = "All";
+            if(mapResult.isPresent()){
+                mapName = mapResult.get().getName();
+            }
+            objectivesDTOList.add(new QuestDetailsObjectiveDTO(
+                    questObjective.getId(),
+                    mapName,
+                    questObjective.getTarget()
+            ));
+        });
+        return objectivesDTOList;
+    }
+
+    private Set<QuestDetailsObjectiveDTO> getTargetAndQuantityObjectives(Set<QuestObjective> objectives, String type) {
+        var currentObjectives = getObjectivesByType(objectives, type);
+        if(currentObjectives.size() == 0){
+            return null;
+        }
+        var objectivesDTOList = new HashSet<QuestDetailsObjectiveDTO>();
+        currentObjectives.forEach(questObjective -> {
+            var mapResult = mapRepository.findById(questObjective.getLocation());
+            String mapName = "All";
+            if(mapResult.isPresent()){
+                mapName = mapResult.get().getName();
+            }
+            objectivesDTOList.add(new QuestDetailsObjectiveDTO(
+                    questObjective.getId(),
+                    mapName,
+                    questObjective.getTarget(),
+                    questObjective.getNumber()
+            ));
+        });
+        return objectivesDTOList;
+    }
+
+    private Set<QuestDetailsObjectiveDTO> getItemAndQuantityObjectives(Set<QuestObjective> objectives, String type){
+        var currentObjectives = getObjectivesByType(objectives, type);
+        if(currentObjectives.size() == 0){
+            return null;
+        }
+        var objectivesDetailsList = new HashSet<QuestDetailsObjectiveDTO>();
+        currentObjectives.forEach(questObjective -> {
+            var itemResult = itemRepository.findById(questObjective.getTarget());
+            if(itemResult.isEmpty()){
+                return;
+            }
+            var mapResult = mapRepository.findById(questObjective.getLocation());
+            String mapName = "All";
+            if(mapResult.isPresent()){
+                mapName = mapResult.get().getName();
+            }
+            var item = itemResult.get();
+            var requiredItemDto = new RequiredItemDTO(item.getId(), item.getName(), 1);
+            objectivesDetailsList.add(new QuestDetailsObjectiveDTO(
+                    questObjective.getId(),
+                    mapName,
+                    requiredItemDto,
+                    questObjective.getNumber()
+            ));
+        });
+        return objectivesDetailsList;
+    }
+
+    private Set<QuestDetailsObjectiveDTO> getItemObjectives(Set<QuestObjective> objectives, String type){
+        var currentObjectives = getObjectivesByType(objectives, type);
+        var objectivesDTOs = new HashSet<QuestDetailsObjectiveDTO>();
+        if(currentObjectives.size() == 0){
+            return null;
+        }
+        currentObjectives.forEach(bo -> {
+            var itemResult = itemRepository.findById(bo.getTarget());
+            if(itemResult.isEmpty()){
+                return;
+            }
+            var item = itemResult.get();
+            var requiredItemDTO = new RequiredItemDTO(item.getId(), item.getName(), 1);
+            var locationResult = mapRepository.findById(bo.getId());
+            String mapName = "All";
+            if(locationResult.isPresent()) {
+                mapName = locationResult.get().getName();
+            }
+            else
+            objectivesDTOs.add(new QuestDetailsObjectiveDTO(
+                    bo.getId(),
+                    mapName,
+                    requiredItemDTO
+            ));
+        });
+        return objectivesDTOs;
+    }
+
+    private List<QuestObjective> getObjectivesByType(Set<QuestObjective> objectives, String type){
+        return objectives
+                .stream()
+                .filter(o -> o.getType().equals(type))
+                .collect(Collectors.toList());
+    }
+
+
+
 
     // Quest reputation
 

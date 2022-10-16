@@ -1,5 +1,5 @@
 .main {
-	width: 50%;
+	width: 70vw;
 }
 
 .main h2 {
@@ -7,3 +7,7 @@
 	font-weight: bold;
 }
 
+.hideout-lists {
+	display: flex;
+	justify-content: space-between;
+}

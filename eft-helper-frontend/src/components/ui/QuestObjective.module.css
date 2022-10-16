@@ -1,0 +1,28 @@
+.objective-list {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 60%;
+}
+
+.objective-list h5 {
+	font-size: 20px;
+	margin-bottom: 10px;
+}
+
+.objective-list ul {
+	padding-left: 0px;
+	list-style: none;
+	border-top: 1px solid seagreen;
+}
+
+.objective-list-row {
+	display: flex;
+	justify-content: space-between;
+	width: 40rem;
+	padding: 3px 5px;
+}
+
+.objective-list-row p {
+	width: 33%;
+}

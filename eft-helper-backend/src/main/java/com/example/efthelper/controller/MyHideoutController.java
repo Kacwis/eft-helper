@@ -93,7 +93,7 @@ public class MyHideoutController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(questDTOSet);
-    }   
+    }
 
     private String getUsernameFromToken(HttpServletRequest request){
         var jwt =  jwtUtil.parseJwt(request);

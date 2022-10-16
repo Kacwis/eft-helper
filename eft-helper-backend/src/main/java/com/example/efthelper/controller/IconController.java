@@ -18,8 +18,14 @@ public class IconController {
         var contentType = MediaType.IMAGE_PNG;
         var resourcePath = "/static/images/" + iconId + ".png";
         var in = getClass().getResourceAsStream(resourcePath);
-        return ResponseEntity.ok()
-                .contentType(contentType)
-                .body(new InputStreamResource(in));
+        try {
+            return ResponseEntity.ok()
+                    .contentType(contentType)
+                    .body(new InputStreamResource(in));
+        }
+        catch (Exception e){
+            System.out.println("NO RESOURCE FOR ID: " + iconId);
+        }
+        return null;
     }
 }

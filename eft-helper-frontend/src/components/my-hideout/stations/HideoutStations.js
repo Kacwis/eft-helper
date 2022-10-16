@@ -53,13 +53,9 @@ const HideoutStations = (props) => {
 		);
 	});
 
-	const showTokenButtonHandler = () => {
-		console.log(authCtx.token);
-	};
 
 	return (
 		<div className={style.main}>
-			<button onClick={showTokenButtonHandler}>TOKEN</button>
 			<h2>Stations</h2>
 			<ul className={style["stations-list"]}>{stationsListContent}</ul>
 		</div>

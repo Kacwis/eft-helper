@@ -24,7 +24,7 @@ function App() {
 				<Route path="log-in" element={<LogInPage />} />
 				<Route path="account-panel" element={<AccountPanel />} />
 				<Route path="my-hideout" element={<MyHideoutPage />}>
-					<Route path="station/:stationId" element={<StationDetails />} />
+					<Route path="station/:stationId" element={<StationDetails />}  />
 					<Route path="quest/:questId" element={<QuestDetails />} />
 				</Route>
 			</Routes>

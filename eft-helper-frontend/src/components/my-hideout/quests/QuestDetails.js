@@ -1,5 +1,10 @@
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import useHttp from "../../../hooks/use-http";
+import { AuthContext } from "../../../store/auth-context";
+import { getMyHideoutQuestById } from "../../api/api";
 import style from "./QuestDetails.module.css";
+import QuestObjectives from "./QuestObjectives";
 
 const DUMMY_QUESTS = [
 	{
@@ -32,12 +37,72 @@ const DUMMY_QUESTS = [
 	},
 ];
 
+const initalQuest = {
+	id: "",
+	exp: 0,
+	requiredLvl: 0,
+	title: "",
+	wiki: "",
+	givingTrader: {
+		id: "",
+		name: "",
+	},
+	turningTrader: {
+		id: "",
+		name: "",
+	},
+	buildObjectives: [],
+	collectObjectives: [],
+	findObjectives: [],
+	keyObjectives: [],
+	killObjectives: [],
+	locateObjectives: [],
+	markObjectives: [],
+	pickupObjectives: [],
+	placeObjectives: [],
+	reputationObjectives: [],
+	skillObjectives: [],
+	warningObjectives: [],
+};
+
 const QuestDetails = () => {
 	const params = useParams();
 
-	const allQuests = DUMMY_QUESTS;
+	const [quest, setQuest] = useState(initalQuest);
 
-	const quest = DUMMY_QUESTS[1];
+	const authCtx = useContext(AuthContext);
+
+	const {
+		error,
+		status,
+		data: responseData,
+		sendRequest,
+	} = useHttp(getMyHideoutQuestById, true);
+
+	useEffect(() => {
+		if (status === "completed" && !error) {
+			setQuest(responseData);
+			console.log(quest);
+		}
+	}, [status, error, setQuest, responseData]);
+
+	useEffect(() => {
+		const requestData = {
+			questId: params.questId,
+			token: authCtx.token,
+		};
+		sendRequest(requestData);
+	}, [params.questId]);
+
+	if (status === "pending") {
+		return <div>Pending...</div>;
+	}
+
+	if (status === "completed" && error) {
+		return <div>{error}</div>;
+	}
+
+	const { givingTrader, turningTrader } = quest;
 
 	return (
 		<div className={style["quest-details-main"]}>
@@ -46,12 +111,11 @@ const QuestDetails = () => {
 				<div className={style["general-info"]}>
 					<p>{quest.requiredLvl} lvl</p>
 					<p>{quest.exp} exp.</p>
-					<a>{quest.wiki}</a>
-					{quest.hint !== null && <p>{quest.hint}</p>}
+					<a href={quest.wiki}>Wiki</a>
 				</div>
 				<div className={style.traders}>
-					<a>{quest.givinTrader.name}</a>
-					<a>{quest.turninTrader.name}</a>
+					<p>From: {givingTrader.name}</p>
+					<p>To: {turningTrader.name}</p>
 				</div>
 				<div className={style.reputations}>
 					<p>Prapor</p>
@@ -60,6 +124,7 @@ const QuestDetails = () => {
 			</div>
 			<div>
 				<h4>Objectives</h4>
+				<QuestObjectives quest={quest} />
 			</div>
 		</div>
 	);

@@ -4,10 +4,11 @@
 }
 
 .quest-details-main {
+	margin-top: 20px;
 	background-color: #011638;
 	color: white;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-between;
 }
 
 .quest-details-info {

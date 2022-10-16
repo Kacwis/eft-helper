@@ -6,7 +6,7 @@ import style from "./MyHideoutMain.module.css";
 const MyHideoutMain = () => {
 	return (
 		<div className={style.main}>
-			<div>
+			<div className={style["hideout-lists"]}>
 				<HideoutStations />
 				<Quests />
 			</div>

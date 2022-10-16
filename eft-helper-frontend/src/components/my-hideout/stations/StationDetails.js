@@ -38,26 +38,6 @@ const StationDetails = () => {
 		setIsModuleBuildPopUpVisible(false);
 	};
 
-	// const getHideoutStationById = async (stationId) => {
-	// 	console.log(authCtx.token);
-	// 	const response = await fetch(
-	// 		`http://localhost:8080/api/hideout/my/stations/details/${stationId}`,
-	// 		{
-	// 			method: "GET",
-	// 			headers: {
-	// 				Authorization: `Bearer ${authCtx.token}`,
-	// 			},
-	// 		}
-	// 	);
-	// 	const data = await response.json();
-	// 	if (!response.ok) {
-	// 		throw new Error("Something went wrong!");
-	// 	}
-	// 	const station = await data;
-	// 	console.log(station);
-	// 	return station;
-	// };
-
 	const {
 		error,
 		status,

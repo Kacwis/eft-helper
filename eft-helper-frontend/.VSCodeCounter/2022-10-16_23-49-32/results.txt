@@ -1,0 +1,108 @@
+Date : 2022-10-16 23:49:32
+Directory : c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend
+Total : 62 files,  31056 codes, 29 comments, 394 blanks, all 31479 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |          3 |     28,880 |          0 |          3 |     28,883 |
+| JavaScript |         36 |      1,512 |          6 |        241 |      1,759 |
+| CSS        |         21 |        606 |          0 |        116 |        722 |
+| Markdown   |          1 |         38 |          0 |         33 |         71 |
+| HTML       |          1 |         20 |         23 |          1 |         44 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                  | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                     |         62 |     31,056 |         29 |        394 |     31,479 |
+| public                                                                                                                                |          2 |         45 |         23 |          2 |         70 |
+| src                                                                                                                                   |         57 |      2,118 |          6 |        357 |      2,481 |
+| src\components                                                                                                                        |         44 |      1,803 |          6 |        287 |      2,096 |
+| src\components\account                                                                                                                |          4 |         93 |          0 |         17 |        110 |
+| src\components\api                                                                                                                    |          1 |         86 |          0 |          7 |         93 |
+| src\components\auth                                                                                                                   |          3 |        374 |          0 |         54 |        428 |
+| src\components\items                                                                                                                  |         12 |        284 |          0 |         61 |        345 |
+| src\components\items\ammo                                                                                                             |          4 |        123 |          0 |         26 |        149 |
+| src\components\items\barter                                                                                                           |          4 |        123 |          0 |         26 |        149 |
+| src\components\items\guns                                                                                                             |          4 |         38 |          0 |          9 |         47 |
+| src\components\layout                                                                                                                 |          4 |        110 |          0 |         18 |        128 |
+| src\components\my-hideout                                                                                                             |         13 |        767 |          6 |        112 |        885 |
+| src\components\my-hideout\quests                                                                                                      |          5 |        401 |          0 |         46 |        447 |
+| src\components\my-hideout\stations                                                                                                    |          4 |        253 |          0 |         44 |        297 |
+| src\components\ui                                                                                                                     |          7 |         89 |          0 |         18 |        107 |
+| src\hooks                                                                                                                             |          2 |         76 |          0 |         16 |         92 |
+| src\pages                                                                                                                             |          6 |         54 |          0 |         18 |         72 |
+| src\store                                                                                                                             |          1 |         37 |          0 |          7 |         44 |
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                                                              | language   | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\README.md                                                     | Markdown   |         38 |          0 |         33 |         71 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\package-lock.json                                             | JSON       |     28,816 |          0 |          1 |     28,817 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\package.json                                                  | JSON       |         39 |          0 |          1 |         40 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\public\index.html                                             | HTML       |         20 |         23 |          1 |         44 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\public\manifest.json                                          | JSON       |         25 |          0 |          1 |         26 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\App.css                                                   | CSS        |         91 |          0 |         18 |        109 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\App.js                                                    | JavaScript |         29 |          0 |          7 |         36 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\account\AccountInfo.js                         | JavaScript |         18 |          0 |          3 |         21 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\account\AccountInfo.module.css                 | CSS        |         45 |          0 |          7 |         52 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\account\AccountInfoRow.js                      | JavaScript |         13 |          0 |          3 |         16 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\account\AccountInfoRow.module.css              | CSS        |         17 |          0 |          4 |         21 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\api\api.js                                     | JavaScript |         86 |          0 |          7 |         93 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\auth\LogInForm.js                              | JavaScript |         85 |          0 |         13 |         98 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\auth\SignUpForm.js                             | JavaScript |        194 |          0 |         22 |        216 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\auth\SignUpForm.module.css                     | CSS        |         95 |          0 |         19 |        114 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\ammo\AmmoItem.js                         | JavaScript |         19 |          0 |          3 |         22 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\ammo\AmmoItem.module.css                 | CSS        |         24 |          0 |          4 |         28 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\ammo\AmmunitionList.js                   | JavaScript |         67 |          0 |         15 |         82 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\ammo\AmmunitionList.module.css           | CSS        |         13 |          0 |          4 |         17 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\barter\BarterItem.js                     | JavaScript |         23 |          0 |          6 |         29 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\barter\BarterItem.module.css             | CSS        |         24 |          0 |          4 |         28 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\barter\BarterItemsList.js                | JavaScript |         64 |          0 |         13 |         77 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\barter\BarterItemsList.module.css        | CSS        |         12 |          0 |          3 |         15 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\guns\GunItem.js                          | JavaScript |         14 |          0 |          2 |         16 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\guns\GunItem.module.css                  | CSS        |          0 |          0 |          1 |          1 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\guns\GunsList.js                         | JavaScript |         24 |          0 |          5 |         29 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\items\guns\GunsList.module.css                 | CSS        |          0 |          0 |          1 |          1 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\layout\Layout.js                               | JavaScript |         12 |          0 |          4 |         16 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\layout\Layout.module.css                       | CSS        |          5 |          0 |          1 |          6 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\layout\MainNavigation.js                       | JavaScript |         51 |          0 |          5 |         56 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\layout\MainNavigation.module.css               | CSS        |         42 |          0 |          8 |         50 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\MyHideoutMain.js                    | JavaScript |         16 |          6 |          4 |         26 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\MyHideoutMain.module.css            | CSS        |         11 |          0 |          3 |         14 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\MyHideoutModuleDetails.module.css   | CSS        |         32 |          0 |          6 |         38 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\MyHideoutModulesDetails.js          | JavaScript |         54 |          0 |          9 |         63 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\quests\QuestDetails.js              | JavaScript |        120 |          0 |         14 |        134 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\quests\QuestDetails.module.css      | CSS        |         23 |          0 |          5 |         28 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\quests\QuestObjectives.js           | JavaScript |        119 |          0 |          6 |        125 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\quests\Quests.js                    | JavaScript |         98 |          0 |         14 |        112 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\quests\Quests.module.css            | CSS        |         41 |          0 |          7 |         48 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\stations\HideoutStations.js         | JavaScript |         52 |          0 |         14 |         66 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\stations\HideoutStations.module.css | CSS        |         32 |          0 |          6 |         38 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\stations\StationDetails.js          | JavaScript |        130 |          0 |         17 |        147 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\my-hideout\stations\StationDetails.module.css  | CSS        |         39 |          0 |          7 |         46 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\Card.js                                     | JavaScript |          4 |          0 |          1 |          5 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\ItemListContainer.js                        | JavaScript |          8 |          0 |          2 |         10 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\LoadingSpinner.js                           | JavaScript |          5 |          0 |          3 |          8 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\LoadingSpinner.module.css                   | CSS        |         24 |          0 |          1 |         25 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\QuestObjective.module.css                   | CSS        |         24 |          0 |          5 |         29 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\QuestObjectiveList.js                       | JavaScript |         10 |          0 |          3 |         13 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\components\ui\QuestObjectiveRow.js                        | JavaScript |         14 |          0 |          3 |         17 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\hooks\use-http.js                                         | JavaScript |         52 |          0 |          9 |         61 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\hooks\use-validation.js                                   | JavaScript |         24 |          0 |          7 |         31 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\index.css                                                 | CSS        |         12 |          0 |          2 |         14 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\index.js                                                  | JavaScript |         16 |          0 |          2 |         18 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\pages\AccountPanel.js                                     | JavaScript |         16 |          0 |          4 |         20 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\pages\HomePage.js                                         | JavaScript |          4 |          0 |          2 |          6 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\pages\ItemsPage.js                                        | JavaScript |         11 |          0 |          3 |         14 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\pages\LogInPage.js                                        | JavaScript |          5 |          0 |          3 |          8 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\pages\MyHideoutPage.js                                    | JavaScript |          9 |          0 |          3 |         12 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\pages\SignUpPage.js                                       | JavaScript |          9 |          0 |          3 |         12 |
+| c:\Users\Kacpe\OneDrive\Dokumenty\GitHub\eft-helper\eft-helper-frontend\src\store\auth-context.js                                     | JavaScript |         37 |          0 |          7 |         44 |
+| Total                                                                                                                                 |            |     31,056 |         29 |        394 |     31,479 |
++---------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

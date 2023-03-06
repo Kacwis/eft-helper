@@ -1,134 +1,89 @@
 import { useContext, useEffect, useState } from "react";
-import { Outlet, useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useHttp from "../../../hooks/use-http";
-import MyHideoutModulesDetails from "../MyHideoutModulesDetails";
-import { getHideoutStationById } from "../../api/api";
-
-import style from "./StationDetails.module.css";
 import { AuthContext } from "../../../store/auth-context";
+import { getHideoutStationById } from "../../api/api";
+import LoadingSpinner from "../../ui/LoadingSpinner";
+import StationLevel from "./StationLevel";
 
-const DUMMY_STATIONS = [
-	{
-		id: "s1",
-		name: "Generator",
-		stationLevels: [
-			{ id: "sL1", level: 1, requiredItems: [], requiredStations: [] },
-		],
-		requiredItems: [
-			{ id: "i1", name: "Fuel" },
-			{ id: "i2", name: "Screwdriver" },
-		],
-		description: "Some short description about random item...",
-	},
-];
+import style from "./Stations.module.css";
 
 const StationDetails = () => {
-	const [station, setStation] = useState(DUMMY_STATIONS[0]);
-	const [isModuleBuiltPopUpVisible, setIsModuleBuildPopUpVisible] =
-		useState(false);
+	const [station, setStation] = useState(null);
+	const [currentLevel, setCurrentLevel] = useState("");
+	const [currentLevelNumber, setCurrentLevelNumber] = useState(0);
+
 	const params = useParams();
 
 	const authCtx = useContext(AuthContext);
 
-	const stationBuiltHandler = () => {
-		setIsModuleBuildPopUpVisible(true);
-	};
+	const { status, error, data, sendRequest } = useHttp(
+		getHideoutStationById,
+		true
+	);
 
-	const cancelMarkingAsBuilt = () => {
-		setIsModuleBuildPopUpVisible(false);
-	};
-
-	const {
-		error,
-		status,
-		data: responseData,
-		sendRequest,
-	} = useHttp(getHideoutStationById, true);
+	useEffect(() => {
+		const requestData = {
+			token: authCtx.token,
+			stationId: params.stationId,
+		};
+		sendRequest(requestData);
+		setCurrentLevel("");
+		setCurrentLevelNumber(0);
+	}, [params.stationId]);
 
 	useEffect(() => {
 		if (status === "completed" && !error) {
-			responseData.stationLevels.sort((sl1, sl2) =>
-				sl1.level < sl2.level ? -1 : 1
-			);
-			setStation(responseData);
+			setStation(data);
 		}
-	}, [status, error, setStation, responseData]);
+	}, [status, error, data]);
 
-	useEffect(() => {
-		sendRequest({ token: authCtx.token, stationId: params.stationId });
-	}, [params.stationId]);
-
-	if (status === "pending") {
-		return <div>Pending...</div>;
+	if (status === "pending" || station === null) {
+		return <LoadingSpinner />;
 	}
 
-	if (error) {
-		return <div>Something went wrong!</div>;
-	}
-
-	const stationLevelsContent = station.stationLevels.map((level) => {
-		console.log(level);
-		return (
-			<li key={level.id}>
-				<h4>Level {level.level}</h4>
-				<div className={style["station-level-details"]}>
-					<h4>Required items</h4>
-					<div className={style["required-items-list"]}>
-						<ul>
-							{level.requiredItems.map((item) => (
-								<RequiredItemRow
-									name={item.name}
-									id={item.id}
-									quantity={item.quantity}
-								/>
-							))}
-						</ul>
-					</div>
-					<h4>Required stations</h4>
-					<div className={style["required-items-list"]}>
-						<ul>
-							{level.requiredStations.map((rs) => {
-								return (
-									<li className={style["required-items-row"]}>
-										<Link to={`/my-hideout/station/${rs.id}`}>
-											<p>{rs.name}</p>
-											<p>{rs.quantity} lvl</p>
-										</Link>
-									</li>
-								);
-							})}
-						</ul>
-					</div>
-				</div>
-			</li>
+	const levelClickHandler = (event) => {
+		const level = +event.target.innerHTML;
+		const currentLevel = station.stationLevels.find(
+			(stationLevel) => stationLevel.level === level
 		);
-	});
+		setCurrentLevelNumber(level);
+		setCurrentLevel(<StationLevel level={currentLevel} />);
+	};
+
+	const levelsListContent = [...Array(station.stationLevels.length).keys()].map(
+		(index) => {
+			const className =
+				index === currentLevelNumber - 1
+					? style["station-level-active"]
+					: style["station-level-inactive"];
+			return (
+				<li key={index + 1}>
+					<button onClick={levelClickHandler} className={className}>
+						{index + 1}
+					</button>
+				</li>
+			);
+		}
+	);
 
 	return (
-		<>
-			<div className={style.main}>
-				<div className={style["detail-info"]}>
-					<h2 className={style["station-name"]}>{station.name}</h2>
-					<p className={style["station-description"]}>{station.description}</p>
+		<div className={style["station-details"]}>
+			<div className={style["station-details-left"]}>
+				<div className={style["station-info"]}>
+					<h3>{station.name}</h3>
+					<p>{station.description}</p>
 				</div>
-				<div className={style["required-items"]}>
-					<h3>Levels</h3>
-					<ul className={style["station-levels-list"]}>
-						{stationLevelsContent}
-					</ul>
+				<div className={style["stations-levels"]}>
+					<ul>{levelsListContent}</ul>
+				</div>
+				<div className={style["station-buttons"]}>
+					<button>Marked as built</button>
+					
 				</div>
 			</div>
-		</>
-	);
-};
-
-const RequiredItemRow = (props) => {
-	return (
-		<li className={style["required-items-row"]}>
-			<img src={`http://localhost:8080/api/icons/${props.id}`} />
-			<p>{props.name}</p>
-			<p>{props.quantity}</p>
-		</li>
+			{currentLevel}
+		</div>
 	);
 };
 

@@ -105,6 +105,5 @@ public class AuthService {
         user.setHideoutStations(stationsSet);
         user.setQuests(questsSet);
         return user;
-
     }
 }

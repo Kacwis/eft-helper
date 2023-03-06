@@ -1,7 +1,9 @@
 package com.example.efthelper.controller;
 
 import com.example.efthelper.model.HideoutStation;
+import com.example.efthelper.model.projection.MyHideoutComponents;
 import com.example.efthelper.model.projection.myHideoutProjection.HideoutStationDetailsDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.TraderWithQuestsDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.quest.MyHideoutQuestDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.quest.QuestDetailsDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.quest.QuestDetailsObjectiveDTO;
@@ -10,10 +12,7 @@ import com.example.efthelper.service.QuestService;
 import com.example.efthelper.util.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
@@ -37,6 +36,8 @@ public class MyHideoutController {
         this.questService = questService;
     }
 
+
+
     @Secured("ROLE_USER")
     @GetMapping("/stations")
     public ResponseEntity<Set<HideoutStation>> readALlStationsForUser(HttpServletRequest request) {
@@ -54,7 +55,7 @@ public class MyHideoutController {
     }
 
     @Secured("ROLE_USER")
-    @GetMapping("stations/details/{stationId}")
+    @GetMapping("/stations/details/{stationId}")
     public ResponseEntity<HideoutStationDetailsDTO> readStationDetailsById(@PathVariable Integer stationId, HttpServletRequest request){
         var username = getUsernameFromToken(request);
         if(username.equals("")){
@@ -71,6 +72,23 @@ public class MyHideoutController {
     }
 
     @Secured("ROLE_USER")
+    @DeleteMapping("/stations/{stationId}")
+    public ResponseEntity<?> deleteStationForUser(@PathVariable Integer stationId, HttpServletRequest request){
+        System.out.println(stationId + " deleted" );
+        var username = getUsernameFromToken(request);
+        if(username == ""){
+            return ResponseEntity.status(403).body("Forbidden");
+        }
+        try {
+            hideoutService.deleteStationForUserById(stationId, username);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @Secured("ROLE_USER")
     @GetMapping("/quests/details/{questId}")
     public ResponseEntity<QuestDetailsDTO> readQuestDetailsById(@PathVariable Integer questId, HttpServletRequest request){
         var questDetails = questService.getQuestDetailsForUser(questId);
@@ -79,20 +97,20 @@ public class MyHideoutController {
 
     @Secured("ROLE_USER")
     @GetMapping("/quests")
-    public ResponseEntity<Set<MyHideoutQuestDTO>> readAllQuestsForUser(HttpServletRequest request){
+    public ResponseEntity<Set<TraderWithQuestsDTO>> readAllQuestsForUser(HttpServletRequest request){
         var username = getUsernameFromToken(request);
         if(username.equals("")){
             return ResponseEntity.badRequest().build();
         }
-        Set<MyHideoutQuestDTO> questDTOSet = null;
+        Set<TraderWithQuestsDTO> traderWithQuestsDTOSet = null;
         try{
-            questDTOSet = questService.getAllQuestsForUser(username);
+            traderWithQuestsDTOSet = questService.getAllQuestsForUser(username);
         }
         catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(questDTOSet);
+        return ResponseEntity.ok(traderWithQuestsDTOSet);
     }
 
     private String getUsernameFromToken(HttpServletRequest request){

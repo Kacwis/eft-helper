@@ -13,6 +13,13 @@
 	background-clip: content-box;
 }
 
+:root{
+	--color-black: black;
+	--color-dark-green: #3e432e;
+	--color-green: #616F39;
+	--color-neon-green: #a7d129;
+}
+
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -20,7 +27,7 @@
 }
 
 body {
-	background-color: rgb(32, 32, 32);
+	background-color:black;
 }
 
 .centered {

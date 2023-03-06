@@ -10,43 +10,40 @@ const MainNavigation = () => {
 
 	return (
 		<header className={style.header}>
-			<div className={style.logo}>
-				<p> EFT HELPER</p>
-			</div>
 			<nav className={style.nav}>
-				<ul>
+				<ul className={style["standard-nav"]}>
 					<li>
 						<NavLink to="/home">Main page</NavLink>
 					</li>
 					<li>
 						<NavLink to="/items">Items</NavLink>
 					</li>
-					{!authCtx.isLoggedIn && (
-						<React.Fragment>
-							<li>
-								<NavLink to="/Log-in">Log in</NavLink>
-							</li>
-							<li>
-								<NavLink to="/sign-in">Sign in</NavLink>
-							</li>
-						</React.Fragment>
-					)}
-					{authCtx.isLoggedIn && (
-						<React.Fragment>
-							<li>
-								<NavLink to="/account-panel">Account</NavLink>
-							</li>
-							<li>
-								<NavLink
-									to="/my-hideout"
-									className={({ isActive }) => (isActive ? "active" : "")}
-								>
-									My hideout
-								</NavLink>
-							</li>
-						</React.Fragment>
-					)}
 				</ul>
+				{!authCtx.isLoggedIn && (
+					<ul className={style["auth-buttons"]}>
+						<li>
+							<NavLink to="/Log-in">Log in</NavLink>
+						</li>
+						<li>
+							<NavLink to="/sign-in">Sign in</NavLink>
+						</li>
+					</ul>
+				)}
+				{authCtx.isLoggedIn && (
+					<ul className={style["account"]}>
+						<li>
+							<NavLink to="/account-panel">Account</NavLink>
+						</li>
+						<li>
+							<NavLink
+								to="/my-hideout"
+								className={({ isActive }) => (isActive ? "active" : "")}
+							>
+								My hideout
+							</NavLink>
+						</li>
+					</ul>
+				)}
 			</nav>
 		</header>
 	);

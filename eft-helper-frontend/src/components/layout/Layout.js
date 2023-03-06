@@ -6,7 +6,7 @@ import style from "./Layout.module.css";
 const Layout = (props) => {
 	return (
 		<React.Fragment>
-			<MainNavigation></MainNavigation>
+			<MainNavigation />
 			<main className={style.main}>{props.children}</main>
 		</React.Fragment>
 	);

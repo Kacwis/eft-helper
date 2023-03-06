@@ -27,7 +27,6 @@ public class HideoutService {
 
     final private UserRepository userRepository;
 
-
     public HideoutService(final HideoutModuleRepository moduleRepository,
                           final HideoutStationRepository stationRepository,
                           final ModuleRequirementRepository requirementRepository,
@@ -74,6 +73,26 @@ public class HideoutService {
         var stationDetailsDTO = new HideoutStationDetailsDTO(station.getId(), station.getName(), station.getFunction());
         stationDetailsDTO.setStationLevels(getStationLevelsForStation(station.getModules()));
         return stationDetailsDTO;
+    }
+
+    public void deleteStationForUserById(Integer stationId, String username) throws Exception {
+        var userResult = userRepository.findByUsername(username);
+        if(userResult.isEmpty()){
+            throw new Exception("User not found");
+        }
+        var user = userResult.get();
+        var stationToDelete = user.getHideoutStations().stream().filter(station -> station.getId().equals(stationId)).findFirst();
+        if(stationToDelete.isPresent()) {
+            var stationLevelTodDelete = stationToDelete.get().getModules()
+                    .stream()
+                    .sorted((module1, module2) -> module1.getLevel() < module2.getLevel() ? 1 : -1)
+                    .findFirst();
+            if (stationLevelTodDelete.isPresent()) {
+                moduleRepository.save(stationLevelTodDelete.get());
+                stationRepository.save(stationToDelete.get());
+            }
+        }
+        userRepository.save(user);
     }
 
     private Set<StationLevelDTO> getStationLevelsForStation(Set<HideoutModule> modules){

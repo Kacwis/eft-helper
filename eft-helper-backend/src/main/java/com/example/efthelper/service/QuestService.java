@@ -5,12 +5,14 @@ import com.example.efthelper.model.projection.NewQuestDTO;
 import com.example.efthelper.model.projection.NewQuestReputationDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.RequiredItemDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.TraderDTO;
+import com.example.efthelper.model.projection.myHideoutProjection.TraderWithQuestsDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.quest.MyHideoutQuestDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.quest.QuestDetailsDTO;
 import com.example.efthelper.model.projection.myHideoutProjection.quest.QuestDetailsObjectiveDTO;
 import com.example.efthelper.model.repository.*;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -169,15 +171,28 @@ public class QuestService {
 
     // My hideout quest
 
-    public Set<MyHideoutQuestDTO> getAllQuestsForUser(String username) throws Exception {
+    public Set<TraderWithQuestsDTO> getAllQuestsForUser(String username) throws Exception {
         var user = userRepository.findByUsername(username);
-        if(user.isEmpty()){
+        if (user.isEmpty()) {
             throw new Exception("User not found");
         }
-        var userQuests = user.get().getQuests();
-        var questDTOs = new HashSet<MyHideoutQuestDTO>();
-        userQuests.forEach(quest -> questDTOs.add(new MyHideoutQuestDTO(quest.getId(), quest.getTitle())));
-        return questDTOs;
+        var questsMap = new HashMap<Trader, Set<MyHideoutQuestDTO>>();
+        var allTraders = traderRepository.findAll();
+        for (var trader : allTraders) {
+            questsMap.put(trader, new HashSet<>());
+        }
+        var allUserQuests = user.get().getQuests();
+        for (var quest : allUserQuests) {
+            if(quest.getGivingTrader() == null){
+                continue;
+            }
+            questsMap.get(quest.getGivingTrader()).add(new MyHideoutQuestDTO(quest.getId(), quest.getTitle()));
+        }
+        var toReturn = new HashSet<TraderWithQuestsDTO>();
+        for (var trader : questsMap.keySet()) {
+            toReturn.add(new TraderWithQuestsDTO(trader.getName(), trader.getId(), questsMap.get(trader)));
+        }
+        return toReturn;
     }
 
 

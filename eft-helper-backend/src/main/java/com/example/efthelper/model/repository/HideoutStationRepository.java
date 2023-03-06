@@ -18,4 +18,5 @@ public interface HideoutStationRepository {
     boolean existsById(Integer id);
 
     Optional<HideoutStation> findByName(String name);
+
 }

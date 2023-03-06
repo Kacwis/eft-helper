@@ -1,47 +1,54 @@
+@import "../../../App.css";
+
 .main {
-	background-color: #3d3d3d;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 30vw;
-}
-
-.main input {
-	margin-top: 10px;
-	margin-bottom: 30px;
-	width: 200px;
-	font-size: 20px;
-	background-color: transparent;
-	border: 2px solid seagreen;
 	color: white;
-}
-
-.main h2 {
-	margin-left: 2%;
-	margin-top: 10px;
-	font-size: 36px;
 }
 
 .main ul {
 	list-style: none;
-	padding-left: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
 }
 
-.quest-list {
-	width: 40%;
-	max-height: 400px;
-	overflow: scroll;
+.quest-item {
+	border: 3px solid var(--color-neon-green);
+	border-bottom-left-radius: 15px;
+	border-top-right-radius: 15px;
+	background-color: transparent;
+	margin: 0.25rem;
+	padding: 0.5rem;
+    width: 10rem;
+    text-align: center;
 }
 
-.quest-list li {
-	border: 2px solid green;
-	background-color: white;
-	text-align: center;
-	font-size: 24px;
-	transition: all 0.3s ease-out;
+.traders-quests{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
 }
 
-.quest-list li:hover {
-	padding: 5px 5px;
-	margin: 5px 0;
+
+.traders-quests button {
+	padding: 0.5rem;
+	background-color: transparent;
+	color: white;
+	border: 1px solid var(--color-neon-green);
+	text-transform: capitalize;
+	font-size: 1.1rem;
+	font-weight: bold;
+    margin: 0 3rem;
+    margin-bottom: 2rem;
+    cursor: pointer;
+}
+
+.traders-quests-list ul{
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    max-height: 20rem;
+    overflow: scroll;
 }

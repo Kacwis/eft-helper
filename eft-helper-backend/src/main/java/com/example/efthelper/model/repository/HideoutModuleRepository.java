@@ -16,4 +16,6 @@ public interface HideoutModuleRepository {
     HideoutModule save(HideoutModule module);
 
     boolean existsById(Integer id);
+
+    void deleteById(Integer id);
 }

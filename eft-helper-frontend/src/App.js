@@ -10,9 +10,10 @@ import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import AccountPanel from "./pages/AccountPanel";
 import MyHideoutPage from "./pages/MyHideoutPage";
-
+import Quests from "./components/my-hideout/quests/Quests";
+import Stations from "./components/my-hideout/stations/Stations";
+import QuestDetails from "./components/my-hideout/quests/QuestsDetails";
 import StationDetails from "./components/my-hideout/stations/StationDetails";
-import QuestDetails from "./components/my-hideout/quests/QuestDetails";
 
 function App() {
 	return (
@@ -24,8 +25,19 @@ function App() {
 				<Route path="log-in" element={<LogInPage />} />
 				<Route path="account-panel" element={<AccountPanel />} />
 				<Route path="my-hideout" element={<MyHideoutPage />}>
-					<Route path="station/:stationId" element={<StationDetails />}  />
-					<Route path="quest/:questId" element={<QuestDetails />} />
+					<Route path="/my-hideout/quests" element={<Quests />}>
+						<Route
+							path="/my-hideout/quests/:questId"
+							element={<QuestDetails />}
+						/>
+					</Route>
+
+					<Route path="/my-hideout/stations" element={<Stations />}>
+						<Route
+							path="/my-hideout/stations/:stationId"
+							element={<StationDetails />}
+						/>
+					</Route>
 				</Route>
 			</Routes>
 		</Layout>

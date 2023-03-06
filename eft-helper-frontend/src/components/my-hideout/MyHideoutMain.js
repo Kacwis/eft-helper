@@ -1,14 +1,26 @@
-import { Outlet } from "react-router-dom";
-import HideoutStations from "./stations/HideoutStations";
-import Quests from "./quests/Quests";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import style from "./MyHideoutMain.module.css";
 
 const MyHideoutMain = () => {
 	return (
 		<div className={style.main}>
-			<div className={style["hideout-lists"]}>
-				<HideoutStations />
-				<Quests />
+			<div className={style["component-buttons"]}>
+				<NavLink
+					to="/my-hideout/quests"
+					className={({ isActive }) =>
+						isActive ? style["component-active"] : style.quests
+					}
+				>
+					Quests
+				</NavLink>
+				<NavLink
+					to="/my-hideout/stations"
+					className={({ isActive }) =>
+						isActive ? style["component-active"] : style.stations
+					}
+				>
+					Stations
+				</NavLink>
 			</div>
 			<Outlet />
 		</div>
@@ -16,10 +28,3 @@ const MyHideoutMain = () => {
 };
 
 export default MyHideoutMain;
-
-/* 
-    HideoutStations >       Quests>
-        HideoutStation          Quest
-
-    Stations / Quests Details 
-*/
